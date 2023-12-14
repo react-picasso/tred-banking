@@ -26,6 +26,7 @@ html {
 
 body {
     font-family: 'Sarabun', sans-serif;
+    background: linear-gradient(to top left, #fff, #3498db);
 }
 
 /* GENERAL ELEMENTS */
