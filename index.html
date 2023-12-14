@@ -7,6 +7,7 @@
         <link rel="shortcut icon" type="image/svg" href="assets/logo.svg" />
         <link href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="styles.css" />
+        <link rel="stylesheet" href="responsive.css" />
         <title>TRED | The Banking you Need</title>
         <script defer src="script.js"></script>
     </head>
@@ -28,13 +29,15 @@
             </nav>
 
             <div class="header__title">
-                <h1>The
-                    <span class="highlight">Banking</span><br/>
-                    you<br />
-                    <span class="highlight">Need</span>
-                </h1>
-                <h4>The only account you'll ever need.</h4>
-                <button class="btn--text btn--scroll-to">Learn More &DownArrow;</button>
+                <section class="header-content">
+                    <h1>The
+                        <span class="highlight">Banking</span><br/>
+                        you<br />
+                        <span class="highlight">Need</span>
+                    </h1>
+                    <h4>The only account you'll ever need.</h4>
+                    <button class="btn--text btn--scroll-to">Learn More &DownArrow;</button>
+                </section>
                 <img src="assets/Credit-Card.svg" class="header__img" alt="TRED" />
             </div>
         </header>
@@ -46,29 +49,33 @@
             </div>
 
             <div class="features">
-                <img src="assets/online-banking.jpg" alt="Online Banking" class="features__img lazy-img" />
-                <div class="features__feature">
-                    <div class="features__icon">
-                        <svg>
-                            <use xlink:href="img/icons.svg#icon-monitor"></use>
-                        </svg>
+                <section class="feature-one">
+                    <img src="assets/online-banking.jpg" data-src="assets/online-banking.jpg" alt="Online Banking" class="features__img lazy-img" />
+                    <div class="features__feature">
+                        <div class="features__icon">
+                            <svg>
+                                <use xlink:href="assets/icons.svg#icon-monitor"></use>
+                            </svg>
+                        </div>
+                        <h5 class="features__header">Complete online banking</h5>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis voluptates ab explicabo facere perferendis porro, itaque recusandae quam labore dicta obcaecati maiores fuga accusamus, incidunt illo doloremque. Ab, dolores nisi.</p>
                     </div>
-                    <h5 class="features__header">Complete online banking</h5>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perspiciatis voluptates ab explicabo facere perferendis porro, itaque recusandae quam labore dicta obcaecati maiores fuga accusamus, incidunt illo doloremque. Ab, dolores nisi.</p>
-                </div>
-                <div class="features__feature">
-                    <div class="features__icon">
-                        <svg>
-                            <use xlink:href="img/icons.svg#icon-trending-up"></use>
-                        </svg>
+                </section>
+                <section class="feature-two">
+                    <div class="features__feature">
+                        <div class="features__icon">
+                            <svg>
+                                <use xlink:href="assets/icons.svg#icon-trending-up"></use>
+                            </svg>
+                        </div>
+                        <h5 class="features__header">Grow your money</h5>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam excepturi provident maxime libero nobis saepe enim sunt optio rem? Rerum earum, eum minima provident veritatis a quaerat sed obcaecati praesentium.
+                        </p>
                     </div>
-                    <h5 class="features__header">Grow your money</h5>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam excepturi provident maxime libero nobis saepe enim sunt optio rem? Rerum earum, eum minima provident veritatis a quaerat sed obcaecati praesentium.
-                    </p>
+                    <img src="assets/grow_money.jpeg" data-src="assets/grow_money.jpeg" alt="plant" class="features__img lazy-img" />
                 </div>
-                <img src="assets/grow_money.jpeg" alt="plant" class="features__img lazy-img" />
-            </div>
+            </section>
         </section>
         <section class="section" id="section--2">
             <div class="section__title">
@@ -82,20 +89,20 @@
 
             <section class="operations">
                 <section class="operations__tab-container">
-                    <button class="btn operations__tab operations__tab--1 operations__tab--active">
+                    <button class="btn operations__tab operations__tab--1 operations__tab--active" data-tab="1">
                         <span>1. Instant Transfers</span>
                     </button>
-                    <button class="btn operations__tab operations__tab--2">
+                    <button class="btn operations__tab operations__tab--2" data-tab="2">
                         <span>2. Instant Loans</span>
                     </button>
-                    <button class="btn operations__tab operations__tab--3">
+                    <button class="btn operations__tab operations__tab--3" data-tab="3">
                         <span>3. Instant Closing</span>
                     </button>
                 </section>
                 <div class="operations__content operations__content--1 operations__content--active">
                     <div class="operations__icon operations__icon--1">
                         <svg>
-                            <use xlink:href="img/icons.svg#icon-upload"></use>
+                            <use xlink:href="assets/icons.svg#icon-upload"></use>
                         </svg>
                     </div>
                     <h5 class="operations__header">
@@ -108,7 +115,7 @@
                 <div class="operations__content operations__content--2">
                     <div class="operations__icon operations__icon--2">
                       <svg>
-                        <use xlink:href="img/icons.svg#icon-home"></use>
+                        <use xlink:href="assets/icons.svg#icon-home"></use>
                       </svg>
                     </div>
                     <h5 class="operations__header">
@@ -124,7 +131,7 @@
                   <div class="operations__content operations__content--3">
                     <div class="operations__icon operations__icon--3">
                       <svg>
-                        <use xlink:href="img/icons.svg#icon-user-x"></use>
+                        <use xlink:href="assets/icons.svg#icon-user-x"></use>
                       </svg>
                     </div>
                     <h5 class="operations__header">
