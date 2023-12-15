@@ -119,3 +119,22 @@ const createUsernames = function (accs) {
 };
 
 createUsernames(accounts);
+
+const updateUI = function (currentAccount) {
+    //Display movements
+    displayMovements(currentAccount);
+    //Display balance
+    calcDisplayBalance(currentAccount);
+    //Display summary
+    calcDisplaySummary(currentAccount);
+}
+
+const calcPrintBalance = function (acc) {
+    acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
+    const formattedMov = formatCurrency(acc.balance, acc.locale, acc.currency);
+    labelBalance.textContent = `${formattedMov}`;
+};
+
+const calcDisplaySum = function (acc) {
+    
+}
