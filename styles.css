@@ -132,11 +132,16 @@ body {
     height: 4.5rem;
     transition: all 0.3s;
   }
+
+  .hamburger {
+    display: none;
+  }
   
   .nav__links {
     display: flex;
     align-items: center;
     list-style: none;
+    gap: 2rem;
   }
   
   .nav__item {

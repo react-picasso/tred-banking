@@ -7,7 +7,7 @@
   
   @media screen and (max-width: 1025px) {
     .nav {
-      padding: 0 1rem;
+      padding: 1rem;
     }
     .nav__link--btn {
         font-size: 1.3rem;
@@ -19,7 +19,11 @@
   
   
   @media screen and (max-width: 750px) {
-      .header__title {
+    header {
+        position: relative;
+    }  
+    
+    .header__title {
           grid-template-columns:1fr;
         }
         .features {
@@ -43,6 +47,40 @@
 
         .cookie-message button {
             font-size: 1.2rem;
+        }
+
+        .nav__links {
+            display: none;
+        }
+
+        .hamburger {
+            display: inline-block;
+            width: 5rem;
+            cursor: pointer;
+        }
+
+        .nav__links.active {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            top: 10%;
+            left: 0;
+            right: 0;
+            background-color: #f3f3f3;
+            padding: 2rem;
+            z-index: 997;
+        }
+
+        .nav__links.active-sticky {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            top: 80%;
+            left: 0;
+            right: 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            z-index: 997;
         }
   }
   
