@@ -10,6 +10,7 @@
     --color-tertiary-opacity: #ff58602d;
     --gradient-primary: linear-gradient(to top left, #3498db, #6ab0de);
     --gradient-secondary: linear-gradient(to top left, #2ecc71, #58d68d);
+    --gradient: linear-gradient(to top left, #247ba0, #ffffb5);
   }
 
 * {
@@ -224,7 +225,7 @@ body {
     z-index: -1;
     opacity: 0.7;
     transform: scale(1.07, 1.05) skewX(-15deg);
-    background-image: var(--gradient-primary);
+    background-image: var(--gradient);
   }
   
   /* FEATURES */
