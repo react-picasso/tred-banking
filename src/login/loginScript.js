@@ -136,5 +136,142 @@ const calcPrintBalance = function (acc) {
 };
 
 const calcDisplaySum = function (acc) {
-    
-}
+    const incomes = acc.movements.filter(mov => mov > 0).reduce((acc, mov) => acc + mov, 0);
+
+    labelSumIn.textContent = formatCurrency(incomes, acc.locale, acc.currency);
+
+    const out = acc.movements.filter(mov => mov < 0).reduce((acc, mov) => acc + mov, 0);
+
+    labelSumOut.textContent = formatCurrency(out, acc.locale, acc.currency);
+
+    const interest = acc.movements.filter(mov => mov > 0).map(deposit => (deposit * acc.interestRate) / 100).filter((int, i, arr) => {
+        return int >= 1;
+    }).reduce((acc, int) => acc + int, 0);
+
+    labelSumInterest.textContent = formatCurrency(interest, acc.locale, acc.currency);
+};
+
+const startLogoutTimer = function () {
+    const tick = function () {
+        const mins = String(Math.trunc(time / 60)).padStart(2, 0);
+        const secs = String(time % 60).padStart(2, 0);
+
+        labelTimer.textContent = `${mins}:${secs}`;
+
+        if (timer === 0) {
+            clearInterval(timing);
+            label.textContent = 'Login to get started';
+            containerApp.style.opacity = 0;
+        }
+
+        timer--;
+    };
+
+    let timer = 100;
+    tick();
+    const timing = setInterval(tick, 1000);
+    return timing;
+};
+
+let currentAccount, timing;
+btnLogin.addEventListener('click', function (e) {
+    e.preventDefault();
+    currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value);   
+
+    if (currentAccount?.pin === Number(inputLoginPin.value)) {
+        labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`;
+        containerApp.style.opacity = 100;
+        const now = new Date();
+        const day = `${now.getDate()}`.padStart(2, 0);
+        const month = `${now.getMonth() + 1}`.padStart(2, 0);
+        const year = now.getFullYear();
+        const hour = `${now.getHours()}`.padStart(2, 0);
+        const min = `${now.getMinutes()}`.padStart(2, 0);
+        labelDate.textContent = `${day}/${month}/${year}, ${hour}:${min}`;
+
+        updateUI(currentAccount);
+
+        inputLoginUsername.value = inputLoginPin.value = '';
+        inputLoginPin.blur();
+
+        if (timing) clearInterval(timing);
+        timing = startLogoutTimer();
+    }
+});
+
+btnTransfer.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    const amount = Number(inputTransferAmount.value);
+    const recieverAcc = accounts.find(
+        acc => acc.username === inputTransferTo.value
+    );
+
+    inputTransferAmount.value = inputTransferTo.value = '';
+
+    if (
+        amount > 0 &&
+        recieverAcc &&
+        currentAccount.balance >= amount &&
+        recieverAcc?.username !== currentAccount.username
+    ) {
+        currentAccount.movements.push(-amount);
+        recieverAcc.movements.push(amount);
+        currentAccount.movementsDates.push(new Date().toISOString());
+        recieverAcc.movementsDates.push(new Date().toISOString());
+
+        updateUI(currentAccount);
+        clearInterval(timing);
+        timing = startLogoutTimer();
+    }
+});
+
+btnClose.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    if (
+        inputCloseUsername.value === currentAccount.username &&
+        Number(inputClosePin.value) === currentAccount.pin
+    ) {
+        const index = accounts.findIndex(
+            acc => acc.username === currentAccount.username
+        );
+        accounts.splice(index, 1);
+
+        containerApp.style.opacity = 0;
+    }
+
+    inputCloseUsername.value = inputClosePin.value = '';
+});
+
+btnLoan.addEventListener('click', function (e) {
+    const amount = Math.floor(inputLoanAmount.value);
+
+    if (amount > 0 && currentAccount.movements.some(mov => mov >= amount / 10)) {
+        setTimeout(function () {
+            currentAccount.movements.push(amount);
+            currentAccount.movementsDates.push(new Date().toISOString());
+            updateUI(currentAccount);
+            clearInterval(timing);
+            timing = startLogoutTimer();
+        }, 2500);
+    }
+
+    inputLoanAmount.value = '';
+});
+
+let sorted = false;
+
+btnSort.addEventListener('click', function (e) {
+    e.preventDefault();
+    displayMovements(currentAccount, !sorted);
+    sorted = !sorted;
+});
+
+const currencies = new Map([
+    ['USD', 'United States dollar'],
+    ['EUR', 'Euro'],
+    ['GBP', 'Pound sterling'],
+]);
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
