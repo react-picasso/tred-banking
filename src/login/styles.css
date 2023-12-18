@@ -111,6 +111,7 @@ body {
   width: 40rem;
   padding: 3rem;
   transition: all ease-in-out 0.2s;
+  background-color: #eee;
 }
 .login__input.warning {
   border: 1px solid red;
