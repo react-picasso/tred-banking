@@ -1,3 +1,5 @@
+![Landing](/assets/landing.png)
+
 # TRED
 
 [TRED](https://tred-banking.vercel.app/) is a online banking web application.
@@ -39,4 +41,4 @@ This project serves as a platform to demonstrate my skills. Therefore, I most li
 
 ## Credit
 
-This project was introduced by [Jonas Schmedtmann](https://github.com/jonasschmedtmann) and inspired by [Bankist](https://bankist-bank.vercel.app/) which has been created by[Ekaterine (Catherine) Mitagvaria](https://github.com/catherineisonline). Kudos to both of them for their amazing work.
+This project was introduced by [Jonas Schmedtmann](https://github.com/jonasschmedtmann) and inspired by [Bankist](https://bankist-bank.vercel.app/) which has been created by [Ekaterine (Catherine) Mitagvaria](https://github.com/catherineisonline). Kudos to both of them for their amazing work.
