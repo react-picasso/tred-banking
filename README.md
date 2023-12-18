@@ -1,5 +1,9 @@
 ![Landing](/assets/landing.png)
 
+![Login](/assets/login.png)
+
+![Balance](/assets/balance.png)
+
 # TRED
 
 [TRED](https://tred-banking.vercel.app/) is a online banking web application.
