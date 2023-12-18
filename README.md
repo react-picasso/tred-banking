@@ -6,7 +6,7 @@
 
 # TRED
 
-[TRED](https://tred-banking.vercel.app/) is a online banking web application.
+[TRED](https://tred-banking.vercel.app/) is an online banking web application.
 
 All features of a modern bank are available and more.
 
