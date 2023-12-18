@@ -1,133 +1,130 @@
-const modal = document.querySelector('.modal');
-const overlay = document.querySelector('.overlay');
-const btnCloseModal = document.querySelector('.btn--close-modal');
-const btnOpenModal = document.querySelectorAll('.btn--show-modal');
-
-const openModal = function (e) {
-    e.preventDefault();
-    modal.classList.remove('hidden');
-    overlay.classList.remove('hidden');
-}
-
-const closeModal = function () {
-    modal.classList.add('hidden');
-    overlay.classList.add('hidden');
-}
-
-btnOpenModal.forEach(btn => btn.addEventListener('click', openModal));
-
-btnCloseModal.addEventListener('click', closeModal);
-overlay.addEventListener('click', closeModal);
-
-document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-        closeModal();
-    }
-})
-
+'use strict';
+//Cookies Message
 const message = document.createElement('section');
 const header = document.querySelector('.header');
-message.classList.add('cookie-message');
-message.innerHTML = 'We use cookies for improved functionality and analytics. <button class="btn btn---close-cookie">Got it!</button>'
-header.append(message);
-
-document.querySelector('.btn---close-cookie').addEventListener('click', function () {
-    message.parentElement.removeChild(message);
-});
-message.style.backgroundColor = '#37383d';
-message.style.width = '120%';
-
-document.querySelector('.nav__links').addEventListener('click', function (e) {
-    e.preventDefault();
-    if (e.target.classList.contains('nav__link')) {
-        const id = e.target.getAttribute('href');
-        document.querySelector(id).scrollIntoView({
-            behavior: 'smooth'
-        });
-    }
-});
-
+const closeCookie = document.querySelector('.btn---close-cookie');
+//Navigation
+const navLinks = document.querySelector('.nav__links');
+const nav = document.querySelector('.nav');
+const headerSection = document.querySelector('.header');
+const hamMenu = document.querySelector('.hamburger');
+//Tabbed components - Operations Section
 const tabs = document.querySelectorAll('.operations__tab');
 const tabsContainer = document.querySelector('.operations__tab-container');
 const tabsContent = document.querySelectorAll('.operations__content');
-
-tabsContainer.addEventListener('click', function (e) {
-    const clicked = e.target.closest('.operations__tab');
-    if (!clicked) return;
-    tabs.forEach(tab => tab.classList.remove('operations__tab--active'));
-    tabsContent.forEach(tabContent => tabContent.classList.remove('operations__content--active'));
-    clicked.classList.add('operations__tab--active');
-
-    document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active');
-});
-
-const nav = document.querySelector('.nav');
-
-const handleMenuHover = function (e) {
-    if (e.target.classList.contains('nav__link')) {
-        const link = e.target;
-        const siblings = link.closest('.nav').querySelectorAll('.nav__link');
-        const logo = link.closest('.nav').querySelector('img');
-        siblings.forEach(sibling => {
-            if (sibling !== link) sibling.style.opacity = this;
-        });
-        logo.style.opacity = this;
+const operationContent = document.querySelector('.operations__content');
+message.classList.add('cookie-message');
+message.innerHTML =
+  "We use cookies for improved functionality and analytics. <button class='btn btn---close-cookie'>Got it! </button>";
+header.append(message);
+if (message.parentElement) {
+  message.parentElement.removeChild(message);
+}
+message.style.backgroundColor = '#37383d';
+message.style.width = '120%';
+navLinks.addEventListener('click', function (e) {
+  e.preventDefault();
+  const target = e.target;
+  if (e.target && target.classList.contains('nav__link')) {
+    const id = target.getAttribute('href');
+    const ignoreHref = '/src/login/login.html';
+    if (id === ignoreHref) {
+      window.location.href = ignoreHref;
+    } else if (id) {
+      const element = document.querySelector(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
+  }
+});
+tabsContainer.addEventListener('click', function (e) {
+  const target = e.target;
+  const clicked = target.closest('.operations__tab');
+  if (!clicked) return;
+  //Remove active classes
+  tabs.forEach(tab => tab.classList.remove('operations__tab--active'));
+  tabsContent.forEach(tabContent =>
+    tabContent.classList.remove('operations__content--active')
+  );
+  clicked.classList.add('operations__tab--active');
+  if (operationContent) {
+    const clickedTab = clicked.dataset.tab;
+    if (clickedTab) {
+      const content = document.querySelector(
+        `.operations__content--${clickedTab}`
+      );
+      if (content) {
+        content.classList.add('operations__content--active');
+      }
+    }
+  }
+});
+const handleMenuHover = function (opacity, e) {
+  const target = e.target;
+  if (target && target.classList.contains('nav__link')) {
+    const link = target.closest('.nav');
+    const siblings = link.querySelectorAll('.nav__link');
+    const logo = link.querySelector('img');
+    siblings.forEach(sibling => {
+      if (sibling && sibling !== link) {
+        sibling.style.opacity = opacity;
+      }
+    });
+    if (logo) {
+      logo.style.opacity = opacity;
+    }
+    target.style.opacity = '1';
+  }
 };
-
-nav.addEventListener('mouseover', handleMenuHover.bind(0.5));
-
-nav.addEventListener('mouseout', handleMenuHover.bind(1));
-
-const headerSection = document.querySelector('.header');
+nav.addEventListener('mouseover', e => handleMenuHover('0.5', e));
+nav.addEventListener('mouseout', e => handleMenuHover('1', e));
 const navHeight = nav.getBoundingClientRect().height;
 const stickyNav = function (entries) {
-    const [entry] = entries;
-    if (!entry.isIntersecting) {
-        nav.classList.add('sticky');
-        if (hiddenMenu.classList.contains('active')) {
-            hiddenMenu.classList.remove('active');
-            hiddenMenu.classList.add('active-sticky');
-        }
-    } else {
-        nav.classList.remove('sticky');
-        hiddenMenu.classList.remove('active');
-        hiddenMenu.classList.remove('active-sticky');
+  const [entry] = entries;
+  if (!entry.isIntersecting) {
+    nav.classList.add('sticky');
+    if (nav.classList.contains('active')) {
+      navLinks.classList.remove('active');
+      navLinks.classList.add('active-sticky');
     }
+  } else {
+    nav.classList.remove('sticky');
+    navLinks.classList.remove('active');
+    navLinks.classList.remove('active-sticky');
+  }
 };
 const headerObserver = new IntersectionObserver(stickyNav, {
-    root: null,
-    threshold: 0,
-    rootMargin: `-${navHeight}px`
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
 });
 headerObserver.observe(headerSection);
-
+//Reveal sections
 const allSections = document.querySelectorAll('.section');
 const revealSection = function (entries, observer) {
-    const [entry] = entries;
-    if (!entry.isIntersecting) return;
-    entry.target.classList.remove('section--hidden');
-    observer.unobserve(entry.target);
+  const [entry] = entries;
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove('section--hidden');
+  observer.unobserve(entry.target);
 };
-
-const sectionObserver = new IntersectionObserver(revealSection, {
-    root: null,
-    threshold: 0.15
+const sectionOberver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15,
 });
-
 allSections.forEach(function (section) {
-    sectionObserver.observe(section);
-    section.classList.add('section--hidden');
+  sectionOberver.observe(section);
+  section.classList.add('section--hidden');
 });
-
+//Lazy load images
 const targetImages = document.querySelectorAll('img[data-src]');
-
 const loadImg = function (entries, observer) {
   const [entry] = entries;
   if (!entry.isIntersecting) return;
   //replace src with data-src
-  entry.target.src = entry.target.dataset.src;
-  entry.target.addEventListener('load', function () {
+  const imgElement = entry.target;
+  imgElement.src = imgElement.dataset.src || '';
+  imgElement.addEventListener('load', function () {
     entry.target.classList.remove('lazy-img');
   });
   observer.unobserve(entry.target);
@@ -137,69 +134,93 @@ const imgObserver = new IntersectionObserver(loadImg, {
   threshold: 0,
   rootMargin: '-100px',
 });
-
 targetImages.forEach(img => imgObserver.observe(img));
-
+//Slider
 const slider = function () {
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.slide');
-    const maxSlide = slides.length;
-    const btnLeft = document.querySelector('.slider__btn--left');
-    const btnRight = document.querySelector('.slider__btn--right');
-
-    const goToSlide = function (slide) {
-    slides.forEach(
-        (slide, index) =>
-        (slide.style.transform = `translateX(${100 * (index - currentSlide)}%)`)
-    );
-    };
-    goToSlide(0);
-    const nextSlide = function () {
-    if (currentSlide === maxSlide - 1) {
-        currentSlide = 0;
-    } else currentSlide++;
-
-    goToSlide(currentSlide);
-    };
-
-    const prevSlide = function () {
-        if (currentSlide === 0) {
-        currentSlide = maxSlide - 1;
-        } else {
-        currentSlide--;
-        }
-        goToSlide(currentSlide);
-    };
-
-    btnRight.addEventListener('click', nextSlide);
-    btnLeft.addEventListener('click', prevSlide);
-
-    document.addEventListener('click', nextSlide);
-    document.addEventListener('click', prevSlide);
-
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'ArrowLeft') prevSlide();
-        e.key === 'ArrowRight' && nextSlide();
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.slide');
+  const maxSlide = slides.length;
+  const btnLeft = document.querySelector('.slider__btn--left');
+  const btnRight = document.querySelector('.slider__btn--right');
+  const dotContainer = document.querySelector('.dots');
+  const createDots = function () {
+    slides.forEach(function (_, i) {
+      dotContainer.insertAdjacentHTML(
+        'beforeend',
+        `<button class="dots__dot" data-slide="${i}"></button>`
+      );
     });
-
-    dotContainer.addEventListener('click', function (e) {
-        if (e.target.classList.contains('dots__dot')) {
-            const { slide } = e.target.dataset;
-            goToSlide(slide);
-            activeDot(slide);
+  };
+  const dots = document.querySelectorAll('.dots__dot');
+  const activeDot = function (slide) {
+    dots.forEach(dot => dot.classList.remove('dots__dot--active'));
+    const dotSlide = document.querySelector(`.dots__dot`);
+    if (dotSlide) {
+      const slideData = `[data-slide="${slide}"]`;
+      if (slideData) {
+        const dataSlide = document.querySelector(
+          `.dots__dot[data-slide="${slide}"]`
+        );
+        if (dataSlide) {
+          dataSlide.classList.add('dots__dot--active');
         }
-    });
-};
-
-slider();
-
-const hamMenu =  document.querySelector('.hamburger');
-const hiddenMenu = document.querySelector('.nav__links');
-
-hamMenu.addEventListener('click', function () {
-    if (document.querySelector('.nav').classList.contains('sticky')) {
-        hiddenMenu.classList.toggle('active-sticky');
-    } else {
-        hiddenMenu.classList.toggle('active');
+      }
     }
+  };
+  const goToSlide = function (slide) {
+    slides.forEach(
+      (s, index) =>
+        (s.style.transform = `translateX(${100 * (index - slide)}%)`)
+    );
+  };
+  const nextSlide = function () {
+    if (currentSlide === maxSlide - 1) {
+      currentSlide = 0;
+    } else currentSlide++;
+    goToSlide(currentSlide);
+    activeDot(currentSlide);
+  };
+  const prevSlide = function () {
+    if (currentSlide === 0) {
+      currentSlide = maxSlide - 1;
+    } else {
+      currentSlide--;
+    }
+    goToSlide(currentSlide);
+    activeDot(currentSlide);
+  };
+  const init = function () {
+    goToSlide(0);
+    createDots();
+    activeDot(0);
+  };
+  init();
+  btnRight.addEventListener('click', nextSlide);
+  btnLeft.addEventListener('click', prevSlide);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight') nextSlide();
+    if (e.key === 'ArrowLeft') prevSlide();
+  });
+  dotContainer.addEventListener('click', function (e) {
+    const target = e.target;
+    if (target && target.classList.contains('dots__dot')) {
+      const slide = target.dataset.slide;
+      if (slide !== undefined) {
+        const slideNumber = parseInt(slide, 10); // Parse the string as an integer
+        if (!isNaN(slideNumber)) {
+          // Check if parsing was successful
+          goToSlide(slideNumber);
+          activeDot(slideNumber);
+        }
+      }
+    }
+  });
+};
+slider();
+hamMenu.addEventListener('click', function () {
+  if (nav.classList.contains('sticky')) {
+    navLinks.classList.toggle('active-sticky');
+  } else {
+    navLinks.classList.toggle('active');
+  }
 });
